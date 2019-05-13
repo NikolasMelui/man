@@ -75,25 +75,25 @@ adduser manager
 usermod -aG sudo manager
 ```
 
-- Проверяем юзера
+- Проверяем id юзера
 
 ```bash
 id manager
 ```
 
-- Логинемся за нашего юзера через sudo
+- Логинемся юзером manager через sudo
 
 ```bash
 sudo su - manager
 ```
 
-- Создаем юзеру папку для ssh
+- Создаем юзеру папку ssh
 
 ```bash
 sudo mkdir ~/.ssh
 ```
 
-- Делаем ей нужные права
+- Определяем права доступа
 
 ```bash
 chmod 700 ~/.ssh
@@ -105,10 +105,10 @@ chmod 700 ~/.ssh
 ssh/authorized_keys
 ```
 
-- Заходим на локальную машину и копируем наш публичный SSH ключ
+- Копируем на локальную машину публичный SSH ключ
 
 ```bash
-ssh-copy-id -i ~/.ssh/projectname_manager_rsa.pub manager@yourserveradress
+ssh-copy-id -i ~/.ssh/projectname_manager_rsa.pub manager@yourserveradress.com
 ```
 
 - Меняем права доступа на файл для авторизованных ключей
@@ -123,8 +123,8 @@ chmod 600 ~/.ssh/authorized_keys
 sudo service ssh restart
 ```
 
-- Выходим из сессии юзера и сессии рута, отключаемся от сервера и пробуем зайти по ssh с использованием ключа
-- Заходим в конфиг файл и закрываем доступ для рута и возможность заходить на сервер через введение пароля
+- Выходим из сессии юзера и сессии рута, отключаемся от сервера и заходим по ssh с использованием ключа
+- Заходим в конфиг файл и закрываем доступ для рута (и возможность заходить на сервер через введение пароля)
 
 ```bash
 sudo nano /etc/ssh/sshd_config
@@ -137,6 +137,45 @@ sudo nano /etc/ssh/sshd_config
 
 ```bash
 sudo systemctl reload sshd
+```
+
+### FAIL2BAN
+
+- Устанавливаем fail2ban и конфигурируем "локальную тюрьму"
+
+```bash
+sudo apt install fail2ban
+```
+
+- Конфигурируем  fail2ban
+
+```bash
+sudo vim /etc/fail2ban/jail.local
+```
+
+    [DEFAULT]
+    maxretry = 5
+    bantime = 86400
+    action = firewallcmd-ipset
+    [ssh]
+    enable = true
+    port = ssh
+    filter = sshd
+    action = iptables[name=ssh, port=ssh, protocol=tcp]
+    logpath = /var/log/auth.log
+    maxretry = 5
+    findtime = 600
+
+- Перезагружаем fail2ban службу
+
+```bash
+sudo systemctl reload fail2ban
+```
+
+> Посмотреть список забаненных адресов
+
+```bash
+sudo iptables -S
 ```
 
 #### License
