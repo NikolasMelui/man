@@ -6,34 +6,137 @@
 
 ### SSH_LOCAL
 
-* На локальной машине заходим в
+- На локальной машине заходим в
 
 ```bash
 cd ~/.ssh
 ```
 
-* Создаем новый ssh ключ для нашего сервера
+- Создаем новый ssh ключ для нашего сервера
 
 ```bash
 ssh-keygen -t rsa -b 4096
 ```
 
-* Запускаем ssh-agent
+- Запускаем ssh-agent (если собираемся использовать passphrase)
 
 ```bash
 eval“$(ssh-agent -s)”
 ```
 
-* Добавляем наш ключ в агента
+- Добавляем наш ключ в агента
 
 ```bash
 ssh-add -K ~/.ssh/curkey_rsa
 ```
 
-* Указываем в config файле настройки подключения нового сервера
+- Добавляем в конфигурационный файл настройки подключения к серверу
 
 ```bash
 vim ~/.ssh/config
+```
+
+### SSH_REMOTE
+
+- Заходим на сервер по ssh от root юзера через ввод пароля
+
+```bash
+ssh root@yourserveradress.com
+```
+
+- Генерируем SSH ключ (для доступа в GitLab)
+
+```bash
+ssh-keygen
+```
+
+- Добавляем нового юзера с именем manager (чтобы не работать из под рута)
+
+```bash
+adduser manager
+```
+
+  > Если что-то пошло не так, удаляем юзера manager и пересоздаем его
+
+  ```bash
+  deluser manager
+  adduser manager
+  ```
+
+  > В случае необходимости меняем пароль
+
+  ```bash
+  passwd manager
+  ```
+
+- Добавляем юзера manager в группу админов
+
+```bash
+usermod -aG sudo manager
+```
+
+- Проверяем юзера
+
+```bash
+id manager
+```
+
+- Логинемся за нашего юзера через sudo
+
+```bash
+sudo su - manager
+```
+
+- Создаем юзеру папку для ssh
+
+```bash
+sudo mkdir ~/.ssh
+```
+
+- Делаем ей нужные права
+
+```bash
+chmod 700 ~/.ssh
+```
+
+- Создаем файл для авторизованных ключей
+
+```~/.bash
+ssh/authorized_keys
+```
+
+- Заходим на локальную машину и копируем наш публичный SSH ключ
+
+```bash
+ssh-copy-id -i ~/.ssh/projectname_manager_rsa.pub manager@yourserveradress
+```
+
+- Меняем права доступа на файл для авторизованных ключей
+
+```bash
+chmod 600 ~/.ssh/authorized_keys
+```
+
+- Перезагружаем ssh службу
+
+```bash
+sudo service ssh restart
+```
+
+- Выходим из сессии юзера и сессии рута, отключаемся от сервера и пробуем зайти по ssh с использованием ключа
+- Заходим в конфиг файл и закрываем доступ для рута и возможность заходить на сервер через введение пароля
+
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+
+  > PermitRootLogin no
+  > PasswordAuthentication no
+
+- Перезагружаем наш sshd процесс
+
+```bash
+sudo systemctl reload sshd
 ```
 
 #### License
