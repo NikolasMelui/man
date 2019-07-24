@@ -1,4 +1,4 @@
-# Man
+\*\*\*\*# Man
 
 📟 Привет. Меня зовут [NikolasMelui][nikolasmelui], я занимаюсь разработкой. В последнее время стал замечать, что с регулярностью примерно раз в 2-3 недели гуглю то, что делаю редко, но делаю. Чтобы перестать искать то, что уже находил, решил сделал свой мануал, в котором, со временем, будет всё. Пока на русском, но скоро будет перевод.
 
@@ -56,18 +56,18 @@ ssh-keygen
 adduser manager
 ```
 
-  > Если что-то пошло не так, удаляем юзера manager и пересоздаем его
+> Если что-то пошло не так, удаляем юзера manager и пересоздаем его
 
-  ```bash
-  deluser manager
-  adduser manager
-  ```
+```bash
+deluser manager
+adduser manager
+```
 
-  > В случае необходимости меняем пароль
+> В случае необходимости меняем пароль
 
-  ```bash
-  passwd manager
-  ```
+```bash
+passwd manager
+```
 
 - Добавляем юзера manager в группу админов
 
@@ -103,13 +103,14 @@ chmod 700 ~/.ssh
 
 ```~/.bash
 ssh/authorized_keys
-```
+
+````
 
 - Копируем на локальную машину публичный SSH ключ
 
 ```bash
 ssh-copy-id -i ~/.ssh/projectname_manager_rsa.pub manager@yourserveradress.com
-```
+````
 
 - Меняем права доступа на файл для авторизованных ключей
 
@@ -130,8 +131,8 @@ sudo service ssh restart
 sudo nano /etc/ssh/sshd_config
 ```
 
-  > PermitRootLogin no
-  > PasswordAuthentication no
+> PermitRootLogin no
+> PasswordAuthentication no
 
 - Перезагружаем наш sshd процесс
 
@@ -147,7 +148,7 @@ sudo systemctl reload sshd
 sudo apt install fail2ban
 ```
 
-- Конфигурируем  fail2ban
+- Конфигурируем fail2ban
 
 ```bash
 sudo vim /etc/fail2ban/jail.local
@@ -178,6 +179,87 @@ sudo systemctl reload fail2ban
 sudo iptables -S
 ```
 
+### ZSH
+
+- Устанавливаем ZSH
+
+```bash
+sudo apt install zsh
+```
+
+- Устанавливаем ohmyzsh
+
+```bash
+curl -L http://install.ohmyz.sh | sh
+```
+
+- Определяем zsh как темринал по умолчанию
+
+```bash
+chsh -s /bin/zsh
+```
+
+- Скачиваем и устанавливаем тему spaceship
+
+```bash
+git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme”
+vim ~/.zshrc
+```
+
+ZSH_THEME="spaceship"
+
+- Добавляем необходимые плагины и конфигурации в .zshrc файл ``
+
+  ansible
+  aterminal
+  autojump
+  colored-man-pages
+  common-aliases
+  copydir
+  copyfile
+  extract
+  docker-compose
+  docker-machine docker
+  git
+  history
+  last-working-dir
+  lighthouse
+  lol
+  node
+  npm
+  per-directory-history
+  perms
+  redis-cli
+  ssh-agent
+  tig
+  tmux
+  tmuxinator
+  vi-mode
+  vscode
+  web-search
+  yarn
+  z
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  zsh-completions
+  history-substring-search
+  zsh_reload
+
+git clone https://github.com/zsh-users/zsh-autosuggestions \${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+```bash
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
+```bash
+git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
+```
+
+```bash
+git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+```
+
 #### License
 
 MIT License
@@ -205,5 +287,5 @@ SOFTWARE.
 **From developers 2 developers.**
 [NikolasMelui][nikolasmelui]
 
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
-   [nikolasmelui]: <https://github.com/NikolasMelui>
+[//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
+[nikolasmelui]: https://github.com/NikolasMelui
