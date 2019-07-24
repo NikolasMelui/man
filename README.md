@@ -1,8 +1,18 @@
-\*\*\*\*# Man
+# Man
 
 📟 Привет. Меня зовут [NikolasMelui][nikolasmelui], я занимаюсь разработкой. В последнее время стал замечать, что с регулярностью примерно раз в 2-3 недели гуглю то, что делаю редко, но делаю. Чтобы перестать искать то, что уже находил, решил сделал свой мануал, в котором, со временем, будет всё. Пока на русском, но скоро будет перевод.
 
 ## VPS
+
+### Первичное обновление системы и установка пакетов
+
+```bash
+sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove
+```
+
+```bash
+sudo apt install vim git tig curl inxi wget xclip thefuck tmux ranger screenfetch
+```
 
 ### SSH_LOCAL
 
@@ -154,18 +164,18 @@ sudo apt install fail2ban
 sudo vim /etc/fail2ban/jail.local
 ```
 
-    [DEFAULT]
-    maxretry = 5
-    bantime = 86400
-    action = firewallcmd-ipset
-    [ssh]
-    enable = true
-    port = ssh
-    filter = sshd
-    action = iptables[name=ssh, port=ssh, protocol=tcp]
-    logpath = /var/log/auth.log
-    maxretry = 5
-    findtime = 600
+  [DEFAULT]
+  maxretry = 5
+  bantime = 86400
+  action = firewallcmd-ipset
+  [ssh]
+  enable = true
+  port = ssh
+  filter = sshd
+  action = iptables[name=ssh, port=ssh, protocol=tcp]
+  logpath = /var/log/auth.log
+  maxretry = 5
+  findtime = 600
 
 - Перезагружаем fail2ban службу
 
@@ -199,7 +209,7 @@ curl -L http://install.ohmyz.sh | sh
 chsh -s /bin/zsh
 ```
 
-- Скачиваем и устанавливаем тему spaceship
+- Скачиваем и устанавливаем тему spaceship (можно и другую, но зачем?)
 
 ```bash
 git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
@@ -207,46 +217,57 @@ ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/the
 vim ~/.zshrc
 ```
 
-ZSH_THEME="spaceship"
+- Вносим необходимые изменения в ~/.zshrc файл
 
-- Добавляем необходимые плагины и конфигурации в .zshrc файл ``
+```bash
 
-  ansible
-  aterminal
-  autojump
-  colored-man-pages
-  common-aliases
-  copydir
-  copyfile
-  extract
-  docker-compose
-  docker-machine docker
-  git
-  history
-  last-working-dir
-  lighthouse
-  lol
-  node
-  npm
-  per-directory-history
-  perms
-  redis-cli
-  ssh-agent
-  tig
-  tmux
-  tmuxinator
-  vi-mode
-  vscode
-  web-search
-  yarn
-  z
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  zsh-completions
-  history-substring-search
-  zsh_reload
+  # Theme
+  ZSH_THEME="spaceship"
 
+  # Plugins
+  plugins=(
+    ansible
+    aterminal
+    autojump
+    colored-man-pages
+    common-aliases
+    copydir
+    copyfile
+    extract
+    docker-compose
+    docker-machine docker
+    git
+    history
+    last-working-dir
+    lighthouse
+    lol
+    node
+    npm
+    per-directory-history
+    perms
+    redis-cli
+    ssh-agent
+    tig
+    tmux
+    tmuxinator
+    vi-mode
+    vscode
+    web-search
+    yarn
+    z
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-completions
+    history-substring-search
+    zsh_reload
+  )
+```
+
+- Скачиваем файлы плагинов, которые не входят в базовую установку
+
+```bash
 git clone https://github.com/zsh-users/zsh-autosuggestions \${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
 
 ```bash
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
