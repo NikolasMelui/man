@@ -11,7 +11,7 @@ sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove
 ```
 
 ```bash
-sudo apt install vim git tig curl inxi wget xclip thefuck tmux ranger screenfetch
+sudo apt install vim git tig curl inxi wget xclip thefuck tmux ranger screenfetch build-essential checkinstall libssl-dev
 ```
 
 ### SSH_LOCAL
@@ -311,6 +311,39 @@ git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugi
 
 ```bash
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+```
+
+### NODEJS
+
+- Проверяем, нет ли у нас старых версий nodejs
+
+```bash
+dpkg --get-selections | grep node
+```
+
+- Если есть - удалим их
+
+```bash
+sudo apt purge nodejs
+```
+
+- Скачиваем и установливаем nvm
+
+```bash
+wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+```
+
+- Делаем экспорт наших nvm настроек
+
+```bash
+export NVM_DIR="${XDG_CONFIG_HOME/:-$HOME/.}nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+```
+
+- Устанавливаем нужную версию nodejs
+
+``` bash
+nvm install 12.7.0
 ```
 
 #### License
