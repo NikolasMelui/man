@@ -263,7 +263,6 @@ sudo systemctl reload fail2ban
 sudo iptables -S
 ```
 
-<<<<<<< HEAD
 ### ZSH
 
 - Устанавливаем ZSH
