@@ -263,6 +263,7 @@ sudo systemctl reload fail2ban
 sudo iptables -S
 ```
 
+<<<<<<< HEAD
 ### ZSH
 
 - Устанавливаем ZSH
@@ -594,6 +595,102 @@ sudo apt install python-certbot-nginx
 
 ```bash
 sudo certbot --nginx -d curproject.com -d www.curproject.com
+```
+
+### MONGO_LOCAL
+
+- Устанавливаем mongo
+
+```bash
+sudo apt install mongodb
+```
+
+- Проверяем статус
+
+```bash
+sudo systemctl status mongodb
+```
+
+- Создаём нового root юзера
+
+```bash
+mongo
+```
+
+```bash
+use admin
+```
+
+```bash
+db.createUser({user:"root", pwd:”rootpassword”, roles:[{role:”root”, db:"admin”}]})
+```
+
+- По умолчанию монга открыта для всех, добавим обязательный флаг —auth
+
+```bash
+sudo vim /lib/systemd/system/mongodb.service
+```
+
+ExecStart=/usr/bin/mongod --auth --unixSocketPrefix=${SOCKETPATH} --config ${CONF} $DAEMON_OPTS
+
+- Перезапустим службы и проверим их статус
+
+```bash
+systemctl daemon-reload
+```
+
+```bash
+sudo systemctl restart mongodb
+```
+
+```bash
+sudo systemctl status mongodb
+```
+
+- Зайдем в mongo от имени созданного root
+
+```bash
+mongo -u "root" -p --authenticationDatabase "admin”
+```
+
+- Создадим и перейдем в нужную нам базу
+
+```bash
+use curproject_db
+```
+
+- Создадим нового юзера-админа для только что созданной базы
+
+```bash
+db.createUser( { user: “curproject_manager", pwd: “curpassword”, roles: [ { role: "readWrite", db: “curproject_db" } ] } )
+```
+
+- Создадим папку для резервных копий
+
+```bash
+mkdir /home/curuser/backups/curproject
+```
+
+- Сделаем копию и проверим её содержимое
+
+```bash
+mongodump -u curproject_manager -p curprojectpassword --db curproject_db --out /home/curuser/backups/curproject`date +"%m-%d-%y"`
+```
+
+- Создадим задачу в cron для автоматических бэкапов каждую ночь
+
+```bash
+sudo crontab -e
+```
+
+```bash
+3 3 * * * mongodump -u curproject_manager -p curprojectpassword --db curproject_db --out  /home/curproject_manager/backups/curproject/curproject`date +"%m-%d-%y"`
+```
+
+- И добавим задачу, которая будет чистить диск от старых бэкапов
+
+```bash
+3 1 * * * find /home/curproject_manager/backups/curproject/ -mtime +7 -exec rm -rf {} \;
 ```
 
 #### License
