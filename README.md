@@ -224,6 +224,38 @@ vim ~/.zshrc
   # Theme
   ZSH_THEME="spaceship"
 
+  # Configs Spaceship
+  SPACESHIP_HOST_SHOW=true
+  SPACESHIP_HOST_SUFFIX=' ssh '
+  SPACESHIP_USER_SHOW=always
+  SPACESHIP_USER_PREFIX=
+  SPACESHIP_DIR_TRUNC_REPO=false
+  SPACESHIP_DIR_TRUNC=0
+  SPACESHIP_GIT_PREFIX=
+  SPACESHIP_EXIT_CODE_SHOW=true
+  SPACESHIP_PROMPT_ORDER=(
+    host          # Hostname section
+    user          # Username section
+    dir           # Current directory section
+    line_sep      # Line break
+    git           # Git section (git_branch + git_status)
+    package       # Package version
+    node          # Node.js section
+    php           # PHP section
+    conda         # conda virtualenv section
+    pyenv         # Pyenv section
+    venv          # virtualenv section
+    golang        # Go section
+    docker        # Docker section
+    kubecontext   # Kubectl context section
+    exec_time     # Execution time
+    line_sep      # Line break
+    vi_mode       # Vi-mode indicator
+    jobs          # Background jobs indicator
+    exit_code     # Exit code section
+    char          # Prompt character
+  )
+
   # Plugins
   plugins=(
     ansible
