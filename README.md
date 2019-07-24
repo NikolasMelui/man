@@ -420,6 +420,182 @@ export NVM_DIR="${XDG_CONFIG_HOME/:-$HOME/.}nvm"
 nvm install 12.7.0
 ```
 
+### NGINX
+
+- Устанавим nginx
+
+```bash
+sudo apt install nginx
+```
+
+- Проверяем его работоспособность
+
+```bash
+systemctl status nginx
+```
+
+- Создадим первый виртуальный хост
+
+```bash
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/curproject.com
+```
+
+- Подготовим директорию для лог- и error- файлов
+
+```bash
+sudo mkdir /var/log/nginx/curproject
+```
+
+- Создадим эти файлы
+
+```bash
+sudo touch /var/log/nginx/curproject/access.log
+```
+
+```bash
+sudo touch /var/log/nginx/curproject/error.log
+```
+
+- Настроим виртуальный хост (SSL)
+
+```bash
+sudo vim /etc/nginx/sites-available/default /etc/nginx/sites-available/curproject.com
+```
+
+```bash
+
+  # SSL
+
+  server {
+    server_name curproject.com www.curproject.com;
+    return 301 https://curproject.com$request_uri;
+  }
+
+  server {
+    listen 443 ss http2l;
+    ssl on;
+    ssl_certificate /etc/letsencrypt/live/curproject.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/curproject.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    server_name www.curproject.com.ru;
+    return 301 https://curproject.com$request_uri;
+  }
+
+  server {
+    listen 443 ssl http2;
+    ssl on;
+    ssl_certificate /etc/letsencrypt/live/curproject.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/curproject.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    server_name curproject.com;
+    access_log /var/log/nginx/curproject/access.log;
+    access_log /var/log/nginx/curproject/error.log;
+
+    location / {
+      proxy_pass http://0.0.0.0:0000;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_connect_timeout 120;
+      proxy_send_timeout 120;
+      proxy_read_timeout 180;
+    }
+
+    location /secure/ {
+      proxy_pass http://0.0.0.0:0000/secure/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_connect_timeout 120;
+      proxy_send_timeout 120;
+      proxy_read_timeout 180;
+      auth_basic "Unauthorized";
+      auth_basic_user_file /etc/nginx/.htpasswd/curproject.com;
+    }
+  }
+```
+
+```bash
+
+  # Without SSL
+
+  server {
+    server_name www.curproject.com;
+    return 301 http://curproject.com$request_uri;
+  }
+
+  server {
+    listen 80;
+    server_name curproject.com;
+    access_log /var/log/nginx/curproject/access.log;
+    access_log /var/log/nginx/curproject/error.log;
+
+    location / {
+      proxy_pass http://0.0.0.0:0000;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_connect_timeout 120;
+      proxy_send_timeout 120;
+      proxy_read_timeout 180;
+    }
+
+    location /secure/ {
+      proxy_pass http://0.0.0.0:0000/secure/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_connect_timeout 120;
+      proxy_send_timeout 120;
+      proxy_read_timeout 180;
+      auth_basic "Unauthorized";
+      auth_basic_user_file /etc/nginx/.htpasswd/curproject.com;
+    }
+  }
+```
+
+- Добавим симлинк созданного виртуального хоста
+
+```bash
+sudo ln -s /etc/nginx/sites-available/curproject.com /etc/nginx/sites-enabled/
+```
+
+- Удалим симлинк на дефолтный конфиг
+
+```bash
+sudo rm /etc/nginx/sites-enabled/default
+```
+
+- Добавим некоторые важные настройки nignx
+
+```bash
+sudo vim /etc/nginx/nginx.conf
+```
+
+  server_names_hash_bucket_size: 64;
+
+- Добавим наше доменное имя в hosts файл
+
+```bash
+sudo vim /etc/hosts
+```
+
+  127.0.0.1 curproject.com
+
+- Если нам необходима SSL конфигурация - установим certbot
+
+```bash
+sudo apt install python-certbot-nginx
+```
+
+- Добавим сертификаты для выбранных доменных имен
+
+```bash
+sudo certbot --nginx -d curproject.com -d www.curproject.com
+```
+
 #### License
 
 MIT License
