@@ -150,6 +150,46 @@ sudo nano /etc/ssh/sshd_config
 sudo systemctl reload sshd
 ```
 
+### GIT
+
+- Генерируем новый ssh ключ с почтой нашего проекта
+
+```bash
+ssh-keygen -t rsa -b 4096 “curproject@gmail.com”
+```
+
+- Запустим агента
+
+```bash
+eval $(ssh-agent -s)
+```
+
+- Добавим наш новый ключ в ssh agent
+
+```bash
+ssh-add ~/.ssh/curproject_rsa
+```
+
+- Внесём необходимые изменения в ssh config файл, чтобы не было проблем с доступом до социальной сети git (Githuyb, Gitlab)
+
+```bash
+vim ~/.ssh/config
+```
+
+  Host gitlab.com
+  Preferredauthentications publickey
+  IdentityFile ~/.ssh/curproject_rsa
+
+- Копируем сгенерированный ssh ключ curproject_rsa.pub, после чего добавляем его в раздел Deploy Keys нужной нам социальной сети git
+
+(Settings->Repository->Deploy Keys)
+
+- Клонируем проект git в папку проектов
+
+```bash
+cd ~ && mkdir projects && cd projects && git clone git@gitlab.com:company/curproject.git
+```
+
 ### FAIL2BAN
 
 - Устанавливаем fail2ban и конфигурируем "локальную тюрьму"
