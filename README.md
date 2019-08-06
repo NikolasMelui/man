@@ -204,7 +204,7 @@ eval $(ssh-agent -s)
 ssh-add ~/.ssh/curproject_rsa
 ```
 
-- Внесём необходимые изменения в ssh config файл, чтобы не было проблем с доступом до социальной сети git (Githuyb, Gitlab)
+- Внесём необходимые изменения в ssh config файл, чтобы не было проблем с доступом до социальной сети git (Github, Gitlab)
 
 ```bash
 vim ~/.ssh/config
