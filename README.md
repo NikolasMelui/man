@@ -409,14 +409,21 @@ sudo apt purge nodejs
 - Скачиваем и установливаем nvm
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 ```
+
+- Добавляем путь до zsh shell файла
+
+```bash
+ source $ZSH/oh-my-zsh.sh
+ ```
 
 - Делаем экспорт наших nvm настроек
 
 ```bash
-export NVM_DIR="${XDG_CONFIG_HOME/:-$HOME/.}nvm"
+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 ```
 
 - Устанавливаем нужную версию nodejs
