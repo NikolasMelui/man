@@ -287,14 +287,19 @@ chsh -s /bin/zsh
 
 ```bash
 git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
-ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme”
-vim ~/.zshrc
+```
+
+```bash
+ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 ```
 
 - Вносим необходимые изменения в ~/.zshrc файл
 
 ```bash
+vim ~/.zshrc
+```
 
+```bash
   # Theme
   ZSH_THEME="spaceship"
 
