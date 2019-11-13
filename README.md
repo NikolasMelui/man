@@ -148,13 +148,13 @@ chmod 700 ~/.ssh
 ```~/.bash
 ssh/authorized_keys
 
-````
+```
 
-- Копируем на локальную машину публичный SSH ключ
+- Копируем с локальной машины публичный SSH ключ через утилиту ***ssh-copy-id***
 
 ```bash
 ssh-copy-id -i ~/.ssh/projectname_manager_rsa.pub manager@yourserveradress.com
-````
+```
 
 - Меняем права доступа на файл для авторизованных ключей
 
