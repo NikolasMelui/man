@@ -426,10 +426,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 ```
 
-- Устанавливаем нужную версию nodejs
+- Устанавливаем нужную нам версию nodejs
 
 ``` bash
-nvm install 12.7.0
+nvm install --lts
 ```
 
 ### NGINX
