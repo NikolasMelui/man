@@ -598,7 +598,7 @@ sudo apt install python-certbot-nginx
 sudo certbot --nginx -d curproject.com -d www.curproject.com
 ```
 
-### MONGO_LOCAL
+### MONGO
 
 - Устанавливаем mongo
 
@@ -692,6 +692,20 @@ sudo crontab -e
 
 ```bash
 3 1 * * * find /home/curproject_manager/backups/curproject/ -mtime +7 -exec rm -rf {} \;
+```
+
+### MONGO_LOCAL
+
+- Устанавливаем mongo
+
+```bash
+sudo apt install postgresql
+```
+
+- Проверяем статус
+
+```bash
+sudo systemctl status postgresql
 ```
 
 #### License
