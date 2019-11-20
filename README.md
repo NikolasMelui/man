@@ -446,19 +446,17 @@ sudo apt install nginx
 systemctl status nginx
 ```
 
-- Создадим первый виртуальный хост
+- Создадим первый виртуальный хост (скопируем и изменим дефолтный конфиг файл)
 
 ```bash
 sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/curproject.com
 ```
 
-- Подготовим директорию для лог- и error- файлов
+- Подготовим директорию для лог- и error- файлов и создадим эти файлы
 
 ```bash
 sudo mkdir /var/log/nginx/curproject
 ```
-
-- Создадим эти файлы
 
 ```bash
 sudo touch /var/log/nginx/curproject/access.log
@@ -468,11 +466,7 @@ sudo touch /var/log/nginx/curproject/access.log
 sudo touch /var/log/nginx/curproject/error.log
 ```
 
-- Настроим виртуальный хост (SSL)
-
-```bash
-sudo vim /etc/nginx/sites-available/default /etc/nginx/sites-available/curproject.com
-```
+- Настроим виртуальный хост
 
 ```bash
 
@@ -484,7 +478,7 @@ sudo vim /etc/nginx/sites-available/default /etc/nginx/sites-available/curprojec
   }
 
   server {
-    listen 443 ss http2l;
+    listen 443 ssд http2;
     ssl on;
     ssl_certificate /etc/letsencrypt/live/curproject.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/curproject.com/privkey.pem;
@@ -503,7 +497,7 @@ sudo vim /etc/nginx/sites-available/default /etc/nginx/sites-available/curprojec
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
     server_name curproject.com;
     access_log /var/log/nginx/curproject/access.log;
-    access_log /var/log/nginx/curproject/error.log;
+    error_log /var/log/nginx/curproject/error.log;
 
     location / {
       proxy_pass http://0.0.0.0:0000;
@@ -542,7 +536,7 @@ sudo vim /etc/nginx/sites-available/default /etc/nginx/sites-available/curprojec
     listen 80;
     server_name curproject.com;
     access_log /var/log/nginx/curproject/access.log;
-    access_log /var/log/nginx/curproject/error.log;
+    error_log /var/log/nginx/curproject/error.log;
 
     location / {
       proxy_pass http://0.0.0.0:0000;
@@ -568,33 +562,29 @@ sudo vim /etc/nginx/sites-available/default /etc/nginx/sites-available/curprojec
   }
 ```
 
-- Добавим симлинк созданного виртуального хоста
+- Добавим симлинк созданного виртуального хоста (активиурем виртуальный хост)
 
 ```bash
 sudo ln -s /etc/nginx/sites-available/curproject.com /etc/nginx/sites-enabled/
 ```
 
-- Удалим симлинк на дефолтный конфиг
+- Удалим симлинк на дефолтный конфиг (деактивируем дефолтный виртуальный хост)
 
 ```bash
 sudo rm /etc/nginx/sites-enabled/default
 ```
 
-- Добавим некоторые важные настройки nignx
+- Добавим некоторые важные настройки nignx в ***/etc/nginx/nginx.conf***
 
 ```bash
-sudo vim /etc/nginx/nginx.conf
-```
+server_names_hash_bucket_size: 64;
+```  
 
-  server_names_hash_bucket_size: 64;
-
-- Добавим наше доменное имя в hosts файл
+- Добавим наше доменное имя в файл ***/etc/hosts***
 
 ```bash
-sudo vim /etc/hosts
+127.0.0.1 curproject.com
 ```
-
-  127.0.0.1 curproject.com
 
 - Если нам необходима SSL конфигурация - установим certbot
 
@@ -602,7 +592,7 @@ sudo vim /etc/hosts
 sudo apt install python-certbot-nginx
 ```
 
-- Добавим сертификаты для выбранных доменных имен
+- Добавим сертификаты для выбранных доменных имен ***(доменное имя с www и без него)***
 
 ```bash
 sudo certbot --nginx -d curproject.com -d www.curproject.com
