@@ -22,31 +22,17 @@ sudo apt install vim git tig curl inxi wget xclip thefuck tmux ranger screenfetc
 sudo locale -a
 ```
 
-- Для корректного отображения русского  и английского языков в системе нужно поставить недостающие локали
-
-```bash
-sudo locale-gen "en_US.UTF-8
-```
-
-```bash
-sudo locale-gen ru_RU
-```
-
-```bash
-sudo locale-gen ru_RU.UTF-8
-```
+- Для корректного отображения русского и английского языков в системе нужно поставить недостающие локали (решается обычным реконфигом)
 
 ```bash
 sudo dpkg-reconfigure locales
 ```
 
-- Добавляем локаль в конфигурационный locale файл
+- Добавляем локаль в конфигурационный файл ***/etc/default/locale***
 
 ```bash
-sudo vim /etc/default/locale
+LC_ALL="en_US.UTF-8"
 ```
-
-  LC_ALL="en_US.UTF-8"
 
 ### SSH_LOCAL
 
