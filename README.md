@@ -378,7 +378,7 @@ git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugi
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 ```
 
-### NODEJS
+### NODEJS (ubuntu)
 
 - Проверяем, нет ли у нас старых версий nodejs
 
@@ -417,6 +417,113 @@ export NVM_DIR="$HOME/.nvm"
 ``` bash
 nvm install --lts
 ```
+
+### NODEJS (macOS) with npm and yarn
+
+- Сначала удаляем все старые версии nodejs, npm и yarn
+
+```bash
+sudo rm -rf /usr/local/{lib/node{,/.npm,yarn,_modules},bin,share/man}/{npm*,node*,yarn*,man1/node*}
+sudo rm -rf /opt/local/bin/node /opt/local/include/node /opt/local/lib/node_modules
+sudo rm -rf /usr/local/bin/npm /usr/local/bin/yarn /usr/local/share/man/man1/node.1 /usr/local/lib/dtrace/node.d
+```
+
+- Скачиваем и установливаем nvm через brew
+
+```bash
+brew install nvm
+```
+
+- Создаем директорию для nvm
+
+```bash
+mkdir ~/.nvm
+```
+
+- Добавляем путь до zsh shell файла
+
+```bash
+source $(brew --prefix nvm)/nvm.sh
+ ```
+
+- Делаем экспорт наших nvm настроек
+
+```bash
+export NVM_DIR=~/.nvm
+```
+
+- Перезагружаем терминал
+
+```bash
+source ~/.zshrc
+```
+
+- Проверяем версию nvm
+
+```bash
+nvm --version
+```
+
+- Устанавливаем нужную нам версию nodejs
+
+``` bash
+nvm install --lts
+```
+
+- Делаем установленную версию дефолтной
+
+``` bash
+nvm use default
+```
+
+- Устанавливаем yarn через brew
+
+``` bash
+brew install yarn
+```
+
+- Удаляем ненужную нам версию nodejs, которую brew установил вместе с yarn
+
+``` bash
+brew uninstall node --ignore-dependencies
+```
+
+- Проверяем, что в системе используется нужная нам версия nodejs, которая установлена через nvm 
+
+``` bash
+which node
+```
+
+- Запускаем "доктора", который покажет, что в системе отсутствует ссылка на brew node 
+
+``` bash
+brew doctor
+```
+
+- Посмотрим текущую версию nodejs 
+
+``` bash
+nvm current
+```
+
+- Создадим папку для brew node
+
+``` bash
+mkdir /usr/local/Cellar/node
+```
+
+- Объявим её как симлинк на нашу версию nodejs, которая установлена через nvm
+
+``` bash
+ln -s ~/.nvm/versions/node/<latest-node-lts-version>/ /usr/local/Cellar/node
+```
+
+- Ещё раз запускаем "доктора", который покажет, что ошибок в системе нет и наша brew node указывает на nvm node 
+
+``` bash
+brew doctor
+```
+
 
 ### NGINX
 
