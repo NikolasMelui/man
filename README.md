@@ -530,6 +530,12 @@ where npm
 which npm
 ```
 
+- При необходимости обновляем npm до последней версии
+
+``` bash
+cd ~/.nvm/versions/node/<latest-node-lts-version>/lib/ && npm i npm
+```
+
 - Запускаем "доктора", который покажет, что в системе отсутствует ссылка на brew node 
 
 ``` bash
