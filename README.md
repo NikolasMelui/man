@@ -420,6 +420,12 @@ nvm install --lts
 
 ### NODEJS (macOS) with npm and yarn
 
+- Для начала попробуем удалить nodejs через brew (потому что чаще всего именно через brew ноду и устанавливают)
+
+```bash
+brew uninstall node
+```
+
 - Сначала удаляем все старые версии nodejs, npm и yarn
 
 ```bash
