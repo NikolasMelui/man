@@ -829,9 +829,9 @@ sudo crontab -e
 3 1 * * * find /home/curproject_manager/backups/curproject/ -mtime +7 -exec rm -rf {} \;
 ```
 
-### MONGO_LOCAL
+### POSTGRESQL
 
-- Устанавливаем mongo
+- Устанавливаем postgres
 
 ```bash
 sudo apt install postgresql
@@ -841,6 +841,24 @@ sudo apt install postgresql
 
 ```bash
 sudo systemctl status postgresql
+```
+
+- Проверяем прослушиваемые порты postgres
+
+```bash
+netstat -nlt
+```
+
+- Открываем доступы для всех коннекшенов в конфиг файле **/var/lib/pgsql/<version>/data/postgresql.conf**
+
+```bash
+listen_addresses = '*'
+```
+
+- Добавляем наш айпи с конфигами в разрешенные хосты в конфиг файле **/var/lib/pgsql/<version>/main/pg_hba.conf**
+
+```bash
+host    all             my_login         10.0.0.1/32            md5
 ```
 
 #### License
