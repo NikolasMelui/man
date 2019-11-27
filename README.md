@@ -861,6 +861,24 @@ listen_addresses = '*'
 host    all             my_login         10.0.0.1/32            md5
 ```
 
+- Войти в psql
+
+```bash
+sudo -u postgres psql
+```
+
+- Удалить базу
+
+```bash
+DROP DATABASE [IF EXISTS] name;
+```
+
+- Создать базу
+
+```bash
+CREATE DATABASE db_name OWNER =  role_name
+```
+
 #### License
 
 MIT License
