@@ -363,7 +363,7 @@ vim ~/.zshrc
 - Скачиваем файлы плагинов, которые не входят в базовую установку
 
 ```bash
-git clone https://github.com/zsh-users/zsh-autosuggestions \${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ```
 
 ```bash
