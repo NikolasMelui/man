@@ -397,13 +397,13 @@ sudo apt purge nodejs
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 ```
 
-- Добавляем путь до zsh shell файла
+- Добавляем путь до zsh shell файла в ~/.zshrc файл
 
 ```bash
  source $ZSH/oh-my-zsh.sh
  ```
 
-- Делаем экспорт наших nvm настроек
+- Делаем экспорт nvm настроек в ~/.zshrc файл
 
 ```bash
 export NVM_DIR="$HOME/.nvm"
