@@ -878,6 +878,12 @@ DROP DATABASE [IF EXISTS] name;
 CREATE DATABASE db_name OWNER =  role_name
 ```
 
+- Сделать дамп базы
+
+```bash
+sudo -u postgres pg_dump db_name > db_name_dump.bak
+```
+
 #### License
 
 MIT License
