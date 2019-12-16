@@ -324,15 +324,14 @@ vim ~/.zshrc
   # Plugins
   plugins=(
     ansible
-    aterminal
-    autojump
     colored-man-pages
     common-aliases
     copydir
     copyfile
     extract
+    docker
     docker-compose
-    docker-machine docker
+    docker-machine
     git
     history
     last-working-dir
