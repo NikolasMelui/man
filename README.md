@@ -170,6 +170,32 @@ sudo nano /etc/ssh/sshd_config
 sudo systemctl reload sshd
 ```
 
+### FIREWALL
+
+- Добавляем правило для нашего ssh соединения (нужно указать ваш порт)
+
+```bash
+sudo ufw allow 22
+```
+
+- Активируем firewall
+
+```bash
+sudo ufw enable
+```
+
+- Закрываем небезопасные порты (указываем нужные порты)
+
+```bash
+sudo ufw deny 3003
+```
+
+- Открываем безопасные порты (указываем нужные порты)
+
+```bash
+sudo ufw allow 80
+```
+
 ### GIT
 
 - Генерируем новый ssh ключ с почтой нашего проекта
