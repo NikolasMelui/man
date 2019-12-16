@@ -732,6 +732,22 @@ sudo apt install python-certbot-nginx
 sudo certbot --nginx -d curproject.com -d www.curproject.com
 ```
 
+### PM2
+
+- Устанавливаем PM2
+
+```bash
+npm i -g pm2
+```
+
+- Запускаем проект
+
+```bash
+pm2 start ecosystem.config.js
+```
+
+***https://pm2.keymetrics.io/***
+
 ### MONGO
 
 - Устанавливаем mongo
