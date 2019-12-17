@@ -890,40 +890,60 @@ sudo systemctl status postgresql
 netstat -nlt
 ```
 
-- Открываем доступы для всех коннекшенов в конфиг файле **/var/lib/pgsql/<version>/data/postgresql.conf**
+- Входим в psql от имени postgres
+
+```bash
+sudo -u postgres psql
+```
+- Создаем новую базу
+
+```bash
+CREATE DATABASE db_name;
+```
+
+- Создаем нового юзера с паролем
+
+```bash
+CREATE USER user_name WITH ENCRYPTED PASSWORD 'password';
+```
+
+- Присваиваем юзера к базе и даём ему все права
+
+```bash
+GRANT ALL PRIVILEGES ON DATABASE db_name TO user_name;
+```
+
+- При необходимости удаляем базу
+
+```bash
+DROP DATABASE db_name;
+```
+
+- Создаем дамп базы
+
+```bash
+sudo -u postgres pg_dump db_name > db_name_dump.bak
+```
+
+- Восстанавливаем базу из дампа
+
+```bash
+sudo -u postgres psql -d db_name -f db_name_dump.bak
+```
+
+
+
+
+- Если необходимо, открываем доступы для всех коннекшенов в конфиг файле **/var/lib/pgsql/<version>/data/postgresql.conf**
 
 ```bash
 listen_addresses = '*'
 ```
 
-- Добавляем наш айпи с конфигами в разрешенные хосты в конфиг файле **/var/lib/pgsql/<version>/main/pg_hba.conf**
+- Также, если необходимо, добавляем наш айпи с конфигами в разрешенные хосты в конфиг файле **/var/lib/pgsql/<version>/main/pg_hba.conf**
 
 ```bash
 host    all             my_login         10.0.0.1/32            md5
-```
-
-- Войти в psql
-
-```bash
-sudo -u postgres psql
-```
-
-- Удалить базу
-
-```bash
-DROP DATABASE [IF EXISTS] name;
-```
-
-- Создать базу
-
-```bash
-CREATE DATABASE db_name OWNER =  role_name
-```
-
-- Сделать дамп базы
-
-```bash
-sudo -u postgres pg_dump db_name > db_name_dump.bak
 ```
 
 #### License
