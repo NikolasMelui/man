@@ -451,7 +451,7 @@ nvm install --lts
 brew uninstall node
 ```
 
-- Сначала удаляем все старые версии nodejs, npm и yarn
+- Теперь удаляем все старые версии nodejs, npm и yarn
 
 ```bash
 sudo rm -rf /usr/local/{lib/node{,/.npm,yarn,_modules},bin,share/man}/{npm*,node*,yarn*,man1/node*}
@@ -495,7 +495,7 @@ source ~/.zshrc
 nvm --version
 ```
 
-- Устанавливаем нужную нам версию nodejs
+- Устанавливаем нужную версию nodejs
 
 ``` bash
 nvm install --lts
@@ -507,28 +507,22 @@ nvm install --lts
 nvm use default
 ```
 
-- Устанавливаем yarn через brew
+- Проверяем путь до глобальных npm модулей 
 
 ``` bash
-brew install yarn
+npm root -g
 ```
 
-- Удаляем ненужную нам версию nodejs, которую brew установил вместе с yarn
+- При необходимости меняем путь до глобальных npm модулей (prefix) 
 
 ``` bash
-brew uninstall node --ignore-dependencies
+npm config edit
 ```
 
-- Удаляем ненужную нам версию npm, которую brew установил вместе с yarn и nodejs
+- Устанавливаем yarn
 
 ``` bash
-brew uninstall npm
-```
-
-- Вычищаем папку с ненужными файлами npm
-
-``` bash
-rm -r /usr/local/bin/npm
+npm i -g yarn
 ```
 
 - Проверяем, что в системе нет лишних установок nodejs 
@@ -537,7 +531,7 @@ rm -r /usr/local/bin/npm
 where node
 ```
 
-- Проверяем, что в системе используется нужная нам версия nodejs, которая установлена через nvm
+- Проверяем, что в системе используется нужная нам версия nodejs
 
 ``` bash
 which node
@@ -561,36 +555,11 @@ which npm
 cd ~/.nvm/versions/node/<latest-node-lts-version>/lib/ && npm i npm
 ```
 
-- Запускаем "доктора", который покажет, что в системе отсутствует ссылка на brew node 
-
-``` bash
-brew doctor
-```
-
 - Посмотрим текущую версию nodejs 
 
 ``` bash
 nvm current
 ```
-
-- Создадим папку для brew node
-
-``` bash
-mkdir /usr/local/Cellar/node
-```
-
-- Объявим её как симлинк на нашу версию nodejs, которая установлена через nvm
-
-``` bash
-ln -s ~/.nvm/versions/node/<latest-node-lts-version>/ /usr/local/Cellar/node
-```
-
-- Ещё раз запускаем "доктора", который покажет, что ошибок в системе нет и наша brew node указывает на nvm node 
-
-``` bash
-brew doctor
-```
-
 
 ### NGINX
 
