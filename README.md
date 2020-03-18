@@ -388,6 +388,14 @@ vim ~/.zshrc
 - Скачиваем файлы плагинов, которые не входят в базовую установку
 
 ```bash
+bash < <(curl -s -S -L https://raw.githubusercontent.com/guiferpa/aterminal/master/installer.sh)
+```
+
+```bash
+sudo apt install thefuck
+```
+
+```bash
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ```
 
