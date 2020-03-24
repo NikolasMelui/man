@@ -924,9 +924,6 @@ sudo -u postgres pg_dump db_name > db_name_dump.bak
 sudo -u postgres psql -d db_name -f db_name_dump.bak
 ```
 
-
-
-
 - Если необходимо, открываем доступы для всех коннекшенов в конфиг файле **/var/lib/pgsql/<version>/data/postgresql.conf**
 
 ```bash
@@ -937,6 +934,20 @@ listen_addresses = '*'
 
 ```bash
 host    all             my_login         10.0.0.1/32            md5
+```
+
+### Новое разрешение экрана в Ubuntu
+
+```bash
+xrandr --newmode "2560x1080"  230.37  2560 2728 3000 3440  1080 1081 1084 1118  -HSync +Vsync
+```
+
+```bash
+xrandr --addmode HDMI-2 2560x1080
+```
+
+```bash
+xrandr --output HDMI-2 --mode 2560x1080
 ```
 
 #### License
