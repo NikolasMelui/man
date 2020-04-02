@@ -950,6 +950,56 @@ xrandr --addmode HDMI-2 2560x1080
 xrandr --output HDMI-2 --mode 2560x1080
 ```
 
+#### Bluetooth Ubuntu:
+
+- Заупскаем bluetoothctl
+
+```bash
+sudo bluetoothctl
+```
+
+- Включаем устройство (нужно убедиться, что оно установлено)
+
+```bluetoothctl
+power on
+```
+
+- Регистрируем агента
+
+```bluetoothctl
+agent agent_name
+```
+
+- Делаем агента агентом по-умолчанию
+
+```bluetoothctl
+default-agent
+```
+
+- Даём устройству возможность создавать пару
+
+```bluetoothctl
+pairable on
+```
+
+- Включаем сканирование (ищем устройства, с которыми можно сделать пары)
+
+```bluetoothctl
+scan on
+```
+
+- Добавляем найденное сканированием устройство в "доверенные" (для обращения к устройству нужно использовать его MAC-адрес)
+
+```bluetoothctl
+trust 28:C6:3F:96:CE:12
+```
+
+- Создаем с устройством пару
+
+```bluetoothctl
+pair 28:C6:3F:96:CE:12
+```
+
 #### License
 
 MIT License
