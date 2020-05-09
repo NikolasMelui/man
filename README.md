@@ -11,7 +11,7 @@ sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove
 ```
 
 ```bash
-sudo apt install vim git tig curl inxi wget xclip thefuck tmux ranger screenfetch build-essential checkinstall libssl-dev
+sudo apt install vim git tig curl inxi wget xclip thefuck tmux ranger build-essential checkinstall libssl-dev
 ```
 
 ### LOCALE
