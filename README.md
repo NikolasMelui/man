@@ -28,10 +28,17 @@ sudo locale -a
 sudo dpkg-reconfigure locales
 ```
 
-- Добавляем локаль в конфигурационный файл ***/etc/default/locale***
+- Добавляем локаль в конфигурационный файл ***/etc/default/locale*** нужные локали:
 
 ```bash
-LC_ALL="en_US.UTF-8"
+sudo vim /etc/default/local
+```
+
+```bash
+LANGUAGE=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+LANG=en_US.UTF-8
+LC_TYPE=en_US.UTF-8
 ```
 
 ### SSH_LOCAL
