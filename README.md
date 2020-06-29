@@ -458,51 +458,25 @@ export NVM_DIR="$HOME/.nvm"
 nvm install --lts
 ```
 
-### NODEJS (macOS) with npm and yarn
+### NODEJS (macOS)
 
-- Для начала попробуем удалить nodejs через brew (потому что чаще всего именно через brew ноду и устанавливают)
+NodeJS ВСЕГДА нужно устанавливать через nvm, потому что только это есть истинный путь самурая. Всё остальное - bull sheet!
+
+- Для начала проверим, нет ли у нас уже установленной nodejs:
 
 ```bash
-brew uninstall node
+node -v
 ```
 
-- Теперь удаляем все старые версии nodejs, npm и yarn
-
+- Если nodejs установлена через brew - удаляем её и всё, что с ней всязано (npm, yarn etc.):
 ```bash
+brew uninstall node
 sudo rm -rf /usr/local/{lib/node{,/.npm,yarn,_modules},bin,share/man}/{npm*,node*,yarn*,man1/node*}
 sudo rm -rf /opt/local/bin/node /opt/local/include/node /opt/local/lib/node_modules
 sudo rm -rf /usr/local/bin/npm /usr/local/bin/yarn /usr/local/share/man/man1/node.1 /usr/local/lib/dtrace/node.d
 ```
 
-- Скачиваем и установливаем nvm через brew
-
-```bash
-brew install nvm
-```
-
-- Создаем директорию для nvm
-
-```bash
-mkdir ~/.nvm
-```
-
-- Добавляем путь до zsh shell файла
-
-```bash
-source $(brew --prefix nvm)/nvm.sh
- ```
-
-- Делаем экспорт наших nvm настроек
-
-```bash
-export NVM_DIR=~/.nvm
-```
-
-- Перезагружаем терминал
-
-```bash
-source ~/.zshrc
-```
+- Скачиваем и установливаем nvm по инструкции - https://github.com/nvm-sh/nvm (к сожалению nvm нужно устанавливать также без использования homebrew)
 
 - Проверяем версию nvm
 
@@ -522,16 +496,11 @@ nvm install --lts
 nvm use default
 ```
 
-- Проверяем путь до глобальных npm модулей 
+- Проверяем, нет ли в системе файла .npmrс (если есть - удаляем)
 
 ``` bash
-npm root -g
-```
-
-- При необходимости меняем путь до глобальных npm модулей (prefix) 
-
-``` bash
-npm config edit
+ls ~ | grep .npmrc
+rm ~/.npmrc
 ```
 
 - Устанавливаем yarn
@@ -552,28 +521,36 @@ where node
 which node
 ```
 
-- Проверяем, что в системе нет лишних установок npm 
+- Проверяем, что в системе нет лишних установок node и npm
 
 ``` bash
+where node
 where npm
-```
-
-- Проверяем, что в системе используется нужная нам версия npm, которая установлена через nvm
-
-``` bash
-which npm
 ```
 
 - При необходимости обновляем npm до последней версии
 
 ``` bash
-cd ~/.nvm/versions/node/<latest-node-lts-version>/lib/ && npm i npm
+npm i -g npm
 ```
 
 - Посмотрим текущую версию nodejs 
 
 ``` bash
 nvm current
+```
+
+Теперь, при необходимости переключиться на другую версию nodejs нам достаточно установить её и начать использовать её
+
+``` bash
+nvm install ${version}
+nvm use ${version}
+```
+
+Также прошу обратить внимание на тот факт, что все глобально устанавливаемые npm модули не нужнаются в sudo и устанавливаются в директорию используемой в данной момент версии nodejs
+
+```bash
+/Users/nikolasmelui/.nvm/versions/node/${version}/bin/npm
 ```
 
 ### NGINX
