@@ -599,7 +599,7 @@ sudo touch /var/log/nginx/curproject/error.log
   }
 
   server {
-    listen 443 ssд http2;
+    listen 443 ssl http2;
     ssl on;
     ssl_certificate /etc/letsencrypt/live/curproject.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/curproject.com/privkey.pem;
