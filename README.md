@@ -84,7 +84,7 @@ ssh root@yourserveradress.com
 - Генерируем SSH ключ (для доступа в GitLab)
 
 ```bash
-ssh-keygen
+ssh-keygen -t rsa -b 4096
 ```
 
 - Добавляем нового юзера с именем manager (чтобы не работать из под рута)
