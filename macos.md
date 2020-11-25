@@ -6,10 +6,10 @@
 
 ### Homebrew:
 
-- ansible, autojump, curl, htop, nmap, nvm, ranger, telnet, thefuck, tig, tmux, tree, vim, wget, zsh
+- ansible, autojump, curl, htop, nmap, ranger, telnet, thefuck, tig, tmux, tree, vim, wget, zsh
 
 ```bash
-  brew install ansible autojump curl htop nmap nvm ranger telnet thefuck tig tmux tree vim wget zsh
+  brew install ansible autojump curl htop nmap ranger telnet thefuck tig tmux tree vim wget zsh
 ```
 
 - nerdfonts
@@ -25,6 +25,8 @@ brew cask install font-hack-nerd-font)
 brew install postgresql
 brew services start postgresql
 ```
+
+### Node.js:
 
 - Check the node.js version:
 
