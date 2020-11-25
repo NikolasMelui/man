@@ -831,22 +831,6 @@ sudo crontab -e
 
 ### POSTGRESQL
 
-#### MacOS:
-
-- Устанавливаем postgres через brew
-
-```bash
-brew install postgresql
-```
-
-- Запускаем процесс postgres
-
-```bash
-brew services start postgresql
-```
-
-#### Ubuntu:
-
 - Устанавливаем postgres
 
 ```bash
