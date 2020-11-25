@@ -15,8 +15,15 @@
 - nerdfonts
 
 ```bash
-  brew tap homebrew/cask-fonts
-  brew cask install font-hack-nerd-font)
+brew tap homebrew/cask-fonts
+brew cask install font-hack-nerd-font)
+```
+
+- postgres
+
+```bash
+brew install postgresql
+brew services start postgresql
 ```
 
 ### Desktops:
