@@ -356,39 +356,37 @@ vim ~/.zshrc
 
   # Plugins
   plugins=(
-    ansible
+    #ansible
+    #ant
+    autojump
+    #aws
+    #bower
+    brew
+    #cake
+    #cargo
+    catimg
+    chucknorris
+    colorize
     colored-man-pages
-    common-aliases
-    copydir
-    copyfile
+    command-not-found
+    #composer
+    #docker-compose
+    #docker
+    #dotenv
+    #dotnet
+    encode64
     extract
-    docker
-    docker-compose
-    docker-machine
     git
+    gitignore
+    golang
+    #gulp
+    #helm
+    #heroku
     history
-    last-working-dir
-    lighthouse
-    lol
-    node
-    npm
-    per-directory-history
-    perms
-    redis-cli
-    ssh-agent
-    tig
-    tmux
-    tmuxinator
-    vi-mode
-    vscode
-    web-search
-    yarn
-    z
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-completions
-    history-substring-search
-    zsh_reload
+    httpie
+    jsontools
+    #kubectl
+    #laravel
   )
 ```
 
@@ -399,7 +397,11 @@ bash < <(curl -s -S -L https://raw.githubusercontent.com/guiferpa/aterminal/mast
 ```
 
 ```bash
-sudo apt install thefuck
+sudo apt (brew) install autojump
+```
+
+```bash
+sudo apt (brew) install thefuck
 ```
 
 ```bash
@@ -412,10 +414,6 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 ```bash
 git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
-```
-
-```bash
-git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 ```
 
 ### NODEJS (ubuntu)
