@@ -757,7 +757,7 @@ netstat -nlt
 - Входим в psql от имени postgres
 
 ```bash
-sudo -u postgres psql
+sudo -U postgres psql
 ```
 - Создаем новую базу
 
@@ -786,7 +786,7 @@ DROP DATABASE db_name;
 - Создаем дамп базы
 
 ```bash
-sudo -u postgres pg_dump db_name > db_name_dump.bak
+sudo -U postgres pg_dump db_name > db_name_dump.bak
 ```
 
 - Создаем дамп базы в бинарном формате
@@ -798,7 +798,7 @@ pg_dump -U USER_NAME -Fc -f /PATH/TO/FILE/DUMP.tar.gz DATABASE_NAME
 - Восстанавливаем базу из дампа
 
 ```bash
-sudo -u postgres psql -d db_name -f db_name_dump.bak
+sudo -U postgres psql -d db_name -f db_name_dump.bak
 ```
 
 
