@@ -789,11 +789,26 @@ DROP DATABASE db_name;
 sudo -u postgres pg_dump db_name > db_name_dump.bak
 ```
 
+- Создаем дамп базы в бинарном формате
+
+```bash
+pg_dump -U USER_NAME -Fc -f /PATH/TO/FILE/DUMP.tar.gz DATABASE_NAME
+```
+
 - Восстанавливаем базу из дампа
 
 ```bash
 sudo -u postgres psql -d db_name -f db_name_dump.bak
 ```
+
+
+- Восстанавливаем базу из бинарного дампа игнорируя параметры привелегий
+
+```bash
+pg_restore -U USER_NAME -Fc --no-acl -d DATABASE_NAME /PATH/TO/FILE/DUMP.tar.gz
+```
+
+
 
 - Если необходимо, открываем доступы для всех коннекшенов в конфиг файле **/var/lib/pgsql/<version>/data/postgresql.conf**
 
