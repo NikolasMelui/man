@@ -802,7 +802,7 @@ sudo -U postgres psql -d db_name -f db_name_dump.bak
 ```
 
 
-- Восстанавливаем базу из бинарного дампа игнорируя параметры привелегий
+- Восстанавливаем базу из бинарного дампа игнорируя параметры привилегий
 
 ```bash
 pg_restore -U USER_NAME -Fc --no-acl -d DATABASE_NAME /PATH/TO/FILE/DUMP.tar.gz
