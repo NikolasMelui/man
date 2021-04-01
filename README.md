@@ -586,6 +586,13 @@ sudo touch /var/log/nginx/curproject/error.log
   }
 ```
 
+- Проксируем по регулярному выражению
+```
+  location /api/v(\d+)/ {
+    # example.com/api/v2/endpoint -> http://0.0.0.0:0000/api/v2/enpoint
+    proxy_pass http://0.0.0.0:0000$uri;
+```
+
 - Добавим симлинк созданного виртуального хоста (активиурем виртуальный хост)
 
 ```bash
