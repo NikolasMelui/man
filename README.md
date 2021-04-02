@@ -586,6 +586,15 @@ sudo touch /var/log/nginx/curproject/error.log
   }
 ```
 
+- Проксируем по регулярному выражению
+```
+  # ~* - содержит без учета регистра
+  location ~* /api/v(\d+)/ {
+    # example.com/api/v2/endpoint -> http://0.0.0.0:0000/api/v2/enpoint
+    proxy_pass http://0.0.0.0:0000$uri;
+  }
+```
+
 - Добавим симлинк созданного виртуального хоста (активиурем виртуальный хост)
 
 ```bash
@@ -757,7 +766,7 @@ netstat -nlt
 - Входим в psql от имени postgres
 
 ```bash
-sudo -u postgres psql
+sudo -U postgres psql
 ```
 - Создаем новую базу
 
@@ -786,14 +795,29 @@ DROP DATABASE db_name;
 - Создаем дамп базы
 
 ```bash
-sudo -u postgres pg_dump db_name > db_name_dump.bak
+sudo -U postgres pg_dump db_name > db_name_dump.bak
+```
+
+- Создаем дамп базы в бинарном формате
+
+```bash
+pg_dump -U USER_NAME -Fc -f /PATH/TO/FILE/DUMP.tar.gz DATABASE_NAME
 ```
 
 - Восстанавливаем базу из дампа
 
 ```bash
-sudo -u postgres psql -d db_name -f db_name_dump.bak
+sudo -U postgres psql -d db_name -f db_name_dump.bak
 ```
+
+
+- Восстанавливаем базу из бинарного дампа игнорируя параметры привилегий
+
+```bash
+pg_restore -U USER_NAME -Fc --no-acl -d DATABASE_NAME /PATH/TO/FILE/DUMP.tar.gz
+```
+
+
 
 - Если необходимо, открываем доступы для всех коннекшенов в конфиг файле **/var/lib/pgsql/<version>/data/postgresql.conf**
 
