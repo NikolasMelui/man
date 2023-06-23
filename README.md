@@ -460,50 +460,51 @@ nvm install --lts
 
 - Устанавим nginx
 
-```bash
+```shell
 sudo apt install nginx
 ```
 
 - Проверяем его работоспособность
 
-```bash
+```shell
 systemctl status nginx
 ```
 
 - Создадим первый виртуальный хост (скопируем и изменим дефолтный конфиг файл)
 
-```bash
+```shell
 sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/curproject.com
 ```
 
 - Подготовим директорию для лог- и error- файлов и создадим эти файлы
 
-```bash
+```shell
 sudo mkdir /var/log/nginx/curproject
 ```
 
-```bash
+```shell
 sudo touch /var/log/nginx/curproject/access.log
 ```
 
-```bash
+```shell
 sudo touch /var/log/nginx/curproject/error.log
 ```
 
 - Настроим виртуальный хост
 
-```bash
+```shell
 
   # SSL
 
   server {
+    listen 80;
+    listen [::]:80;
     server_name curproject.com www.curproject.com;
     return 301 https://curproject.com$request_uri;
   }
 
   server {
     listen 443 ssl http2;
-    ssl on;
     ssl_certificate /etc/letsencrypt/live/curproject.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/curproject.com/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
@@ -524,6 +525,12 @@ sudo touch /var/log/nginx/curproject/error.log
     error_log /var/log/nginx/curproject/error.log;
 
     location / {
+      root /local/projects/curproject.com;
+      index index.html;
+      try_files $uri $uri/ =404;
+    }
+    
+    location /nodejs/ {
       proxy_pass http://0.0.0.0:0000;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
@@ -547,7 +554,7 @@ sudo touch /var/log/nginx/curproject/error.log
   }
 ```
 
-```bash
+```shell
 
   # Without SSL
 
@@ -563,6 +570,12 @@ sudo touch /var/log/nginx/curproject/error.log
     error_log /var/log/nginx/curproject/error.log;
 
     location / {
+      root /local/projects/curproject.com;
+      index index.html;
+      try_files $uri $uri/ =404;
+    }
+
+    location /nodejs/ {
       proxy_pass http://0.0.0.0:0000;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
@@ -597,38 +610,48 @@ sudo touch /var/log/nginx/curproject/error.log
 
 - Добавим симлинк созданного виртуального хоста (активиурем виртуальный хост)
 
-```bash
+```shell
 sudo ln -s /etc/nginx/sites-available/curproject.com /etc/nginx/sites-enabled/
 ```
 
 - Удалим симлинк на дефолтный конфиг (деактивируем дефолтный виртуальный хост)
 
-```bash
+```shell
 sudo rm /etc/nginx/sites-enabled/default
 ```
 
 - Добавим некоторые важные настройки nignx в ***/etc/nginx/nginx.conf***
 
-```bash
+```shell
 server_names_hash_bucket_size: 64;
 ```  
 
-- Добавим наше доменное имя в файл ***/etc/hosts***
+- Добавим наше доменное имя в файл ***/etc/hosts*** (если это необходимо)
 
-```bash
+```shell
 127.0.0.1 curproject.com
 ```
 
-- Если нам необходима SSL конфигурация - установим certbot
+- Если нам необходимы SSL сертификаты - установим certbot (ставим через snap, при этом удаляем старого через apt, если он был)
 
-```bash
-sudo apt install python-certbot-nginx
+```shell
+sudo snap install core; sudo snap refresh core
+sudo apt remove certbot
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
 ```
 
-- Добавим сертификаты для выбранных доменных имен ***(доменное имя с www и без него)***
+- Создадим сертификаты для выбранных доменных имен ***(доменное имя с www и без него)***
 
-```bash
+```shell
 sudo certbot --nginx -d curproject.com -d www.curproject.com
+```
+
+- Зададим certbot джобу на автопродление сертификатов и проверим, что она работает
+
+```shell
+sudo systemctl status snap.certbot.renew.service
+sudo certbot renew --dry-run
 ```
 
 ### PM2
