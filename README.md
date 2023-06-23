@@ -635,7 +635,8 @@ server_names_hash_bucket_size: 64;
 - Если нам необходимы SSL сертификаты - установим certbot (ставим через snap, при этом удаляем старого через apt, если он был)
 
 ```shell
-sudo snap install core; sudo snap refresh core
+sudo snap install core
+sudo snap refresh core
 sudo apt remove certbot
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
