@@ -52,19 +52,7 @@ cd ~/.ssh
 - Создаем новый ssh ключ для нашего сервера
 
 ```bash
-ssh-keygen -t rsa -b 4096
-```
-
-- Запускаем ssh-agent (если собираемся использовать passphrase)
-
-```bash
-eval“$(ssh-agent -s)”
-```
-
-- Добавляем наш ключ в агента
-
-```bash
-ssh-add -K ~/.ssh/curkey_rsa
+ssh-keygen -t rsa -b 4096 -C "put-here-your-email"
 ```
 
 - Добавляем в конфигурационный файл настройки подключения к серверу
@@ -87,7 +75,7 @@ ssh root@yourserveradress.com
 ssh-keygen -t rsa -b 4096
 ```
 
-- Добавляем нового юзера с именем manager (чтобы не работать из под рута)
+- Добавляем нового юзера (например с именем ```manager```) (чтобы не работать из под рута)
 
 ```bash
 adduser manager
@@ -118,7 +106,7 @@ usermod -aG sudo manager
 id manager
 ```
 
-- Логинемся юзером manager через sudo
+- Логинимся юзером manager через sudo
 
 ```bash
 sudo su - manager
@@ -140,7 +128,6 @@ chmod 700 ~/.ssh
 
 ```~/.bash
 ssh/authorized_keys
-
 ```
 
 - Копируем с локальной машины публичный SSH ключ через утилиту ***ssh-copy-id***
